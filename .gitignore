@@ -1,0 +1,14 @@
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+*.db
+*.sqlite3
+.env
+alembic.ini.bak
+.mypy_cache/
+dist/
+build/
