@@ -1,4 +1,3 @@
-import os
 from collections.abc import Generator
 from contextlib import contextmanager
 
@@ -9,7 +8,7 @@ from sqlalchemy.orm import Session, sessionmaker
 
 class DatabaseConnection:
     def __init__(self, url: str | URL, *, echo: bool = False) -> None:
-        self._engine: Engine | None = create_engine(url, echo=echo, connect_args = {"check_same_thread": False})
+        self._engine: Engine | None = create_engine(url, echo=echo, connect_args={"check_same_thread": False})
         self._sessionmaker: sessionmaker[Session] | None = sessionmaker(bind=self._engine, expire_on_commit=False)
 
     @property
@@ -46,10 +45,3 @@ class DatabaseConnection:
     def get_session(self) -> Generator[Session, None, None]:
         with self.session() as session:
             yield session
-
-
-DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./editorial.db")
-db = DatabaseConnection(DATABASE_URL)
-
-def get_db() -> Generator[Session, None, None]:
-    yield from db.get_session()
